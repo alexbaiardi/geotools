@@ -31,3 +31,5 @@ _build
 
 # spotless up to date checks
 .spotless-index
+
+.env
