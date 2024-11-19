@@ -32,6 +32,7 @@ import org.geotools.gce.geotiff.GeoTiffReader;
 import org.geotools.parameter.DefaultParameterDescriptorGroup;
 import org.geotools.parameter.ParameterGroup;
 import org.geotools.util.factory.Hints;
+import org.geotools.hdfs.HdfsImageInputStreamImpl;
 
 /**
  * Just a basic wrapper around GeoTiffFormat in order to support GeoTiff over HDFS. Hopefully this
@@ -74,23 +75,6 @@ public class HdfsGeoTiffFormat extends GeoTiffFormat {
                                     AbstractGridFormat.GEOTOOLS_WRITE_PARAMS,
                                     AbstractGridFormat.PROGRESS_LISTENER
                                 }));
-        try {
-            if (prop == null) {
-                prop = new Properties();
-                String property = System.getProperty(S3Connector.S3_GEOTIFF_CONFIG_PATH);
-                if (property != null) {
-                    try (InputStream resourceAsStream = new FileInputStream(property)) {
-                        prop.load(resourceAsStream);
-                    }
-                } else {
-                    LOGGER.severe(
-                            "Properties are missing! The system property 's3.properties.location' should be set "
-                                    + "and contain the path to the s3.properties file.");
-                }
-            }
-        } catch (IOException e) {
-            LOGGER.severe(e.getMessage());
-        }
     }
 
     @Override
@@ -98,25 +82,25 @@ public class HdfsGeoTiffFormat extends GeoTiffFormat {
         // in practice here source is probably almost always going to be a string.
         try {
             // big old try block since we can't do anything meaningful with an exception anyway
-            S3ImageInputStreamImpl inStream;
+            HdfsImageInputStreamImpl inStream;
             if (source instanceof File) {
-                throw new UnsupportedOperationException("Can't instantiate S3 with a File handle");
+                throw new UnsupportedOperationException("Can't instantiate Hdfs with a File handle");
             } else if (source instanceof String) {
-                inStream = new S3ImageInputStreamImpl((String) source);
+                inStream = new HdfsImageInputStreamImpl((String) source);
             } else if (source instanceof URL) {
-                inStream = new S3ImageInputStreamImpl((URL) source);
+                inStream = new HdfsImageInputStreamImpl((URL) source);
             } else {
                 throw new IllegalArgumentException(
-                        "Can't create S3ImageInputStream from input of "
+                        "Can't create HdfsImageInputStream from input of "
                                 + "type: "
                                 + source.getClass());
             }
 
-            return new S3GeoTiffReader(inStream, hints);
+            return new HdfsGeoTiffReader(inStream, hints);
         } catch (Exception e) {
             LOGGER.log(
                     Level.FINE,
-                    "Exception raised trying to instantiate S3 image input "
+                    "Exception raised trying to instantiate Hdfs image input "
                             + "stream from source.",
                     e);
             throw new RuntimeException(e);
@@ -132,11 +116,11 @@ public class HdfsGeoTiffFormat extends GeoTiffFormat {
             if (o instanceof String) {
                 String url = (String) o;
                 if (url.contains("://")) {
-                    accepts = containsS3orAliasPrefix(url.split("://")[0]);
+                    accepts = containsHdfsPrefix(url.split("://")[0]);
                 }
             } else if (o instanceof URL) {
                 String protocol = ((URL) o).getProtocol();
-                accepts = containsS3orAliasPrefix(protocol);
+                accepts = containsHdfsPrefix(protocol);
             }
             return accepts;
         }
@@ -147,7 +131,7 @@ public class HdfsGeoTiffFormat extends GeoTiffFormat {
         return this.accepts(source, null);
     }
 
-    private boolean containsS3orAliasPrefix(String prefix) {
-        return "s3".equals(prefix) || prop.get(prefix + ".s3.user") != null;
+    private boolean containsHdfsPrefix(String prefix) {
+        return "hdfs".equals(prefix);
     }
 }

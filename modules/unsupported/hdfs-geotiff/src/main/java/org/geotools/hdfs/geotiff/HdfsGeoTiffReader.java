@@ -18,8 +18,8 @@ package org.geotools.hdfs.geotiff;
 
 import org.geotools.api.data.DataSourceException;
 import org.geotools.gce.geotiff.GeoTiffReader;
-import org.geotools.hdfs.S3ImageInputStreamImpl;
-import org.geotools.hdfs.S3ImageInputStreamImplSpi;
+import org.geotools.hdfs.HdfsImageInputStreamImplSpi;
+import org.geotools.hdfs.HdfsImageInputStreamImpl;
 import org.geotools.util.factory.Hints;
 
 /**
@@ -35,7 +35,7 @@ public class HdfsGeoTiffReader extends GeoTiffReader {
          * gets set (because the reader doesn't need to look for it). We set it hear so that
          * subsequent calls that rely on it pass.
          */
-        this.inStreamSPI = new S3ImageInputStreamImplSpi();
+        this.inStreamSPI = new HdfsImageInputStreamImplSpi();
         // Needs close me, since we're using a stream and it should not be reused.
         closeMe = true;
     }
@@ -43,9 +43,9 @@ public class HdfsGeoTiffReader extends GeoTiffReader {
     public HdfsGeoTiffReader(Object input, Hints uHints) throws DataSourceException {
         super(input, uHints);
         closeMe = true;
-        this.inStreamSPI = new S3ImageInputStreamImplSpi();
-        if (input instanceof S3ImageInputStreamImpl) {
-            String fileName = ((S3ImageInputStreamImpl) input).getFileName();
+        this.inStreamSPI = new HdfsImageInputStreamImplSpi();
+        if (input instanceof HdfsImageInputStreamImpl) {
+            String fileName = ((HdfsImageInputStreamImpl) input).getFileName();
             final int dotIndex = fileName.lastIndexOf('.');
             if (dotIndex != -1 && dotIndex != fileName.length()) {
                 this.coverageName = fileName.substring(0, dotIndex);
