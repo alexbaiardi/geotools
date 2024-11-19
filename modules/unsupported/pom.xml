@@ -49,6 +49,7 @@
     <module>vector-mosaic</module>
     <module>jdbc-h2gis</module>
     <module>graticules</module>
+    <module>hdfs-geotiff</module>
   </modules>
   <profiles>
     <!-- ================================================== -->
