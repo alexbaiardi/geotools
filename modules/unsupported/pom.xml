@@ -233,6 +233,12 @@
       </modules>
     </profile>
     <profile>
+      <id>hdfs-geotiff</id>
+      <modules>
+        <module>hdfs-geotiff</module>
+      </modules>
+    </profile>
+    <profile>
       <id>teradata</id>
       <modules>
         <module>jdbc-teradata</module>
