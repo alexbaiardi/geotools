@@ -17,9 +17,6 @@
 package org.geotools.hdfs.geotiff;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Properties;
@@ -29,10 +26,10 @@ import org.geotools.api.parameter.GeneralParameterDescriptor;
 import org.geotools.coverage.grid.io.AbstractGridFormat;
 import org.geotools.gce.geotiff.GeoTiffFormat;
 import org.geotools.gce.geotiff.GeoTiffReader;
+import org.geotools.hdfs.HdfsImageInputStreamImpl;
 import org.geotools.parameter.DefaultParameterDescriptorGroup;
 import org.geotools.parameter.ParameterGroup;
 import org.geotools.util.factory.Hints;
-import org.geotools.hdfs.HdfsImageInputStreamImpl;
 
 /**
  * Just a basic wrapper around GeoTiffFormat in order to support GeoTiff over HDFS. Hopefully this
@@ -84,7 +81,8 @@ public class HdfsGeoTiffFormat extends GeoTiffFormat {
             // big old try block since we can't do anything meaningful with an exception anyway
             HdfsImageInputStreamImpl inStream;
             if (source instanceof File) {
-                throw new UnsupportedOperationException("Can't instantiate Hdfs with a File handle");
+                throw new UnsupportedOperationException(
+                        "Can't instantiate Hdfs with a File handle");
             } else if (source instanceof String) {
                 inStream = new HdfsImageInputStreamImpl((String) source);
             } else if (source instanceof URL) {

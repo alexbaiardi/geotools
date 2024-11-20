@@ -16,16 +16,13 @@
  */
 package org.geotools.hdfs;
 
-import org.apache.hadoop.fs.FileStatus;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.net.URLDecoder;
-import java.nio.ByteBuffer;
 import javax.imageio.stream.ImageInputStreamImpl;
+import org.apache.hadoop.fs.FileStatus;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
 
 /** ImageInputStream implementation that fetches and caches data from S3 */
 public class HdfsImageInputStreamImpl extends ImageInputStreamImpl {
@@ -34,7 +31,6 @@ public class HdfsImageInputStreamImpl extends ImageInputStreamImpl {
     private final String url;
     private long length;
     private InputStream inputStream;
-
 
     public HdfsImageInputStreamImpl(URL input) throws IOException {
         this(input.toString());

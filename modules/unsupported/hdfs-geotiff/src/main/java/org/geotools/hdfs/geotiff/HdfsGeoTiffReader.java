@@ -18,8 +18,8 @@ package org.geotools.hdfs.geotiff;
 
 import org.geotools.api.data.DataSourceException;
 import org.geotools.gce.geotiff.GeoTiffReader;
-import org.geotools.hdfs.HdfsImageInputStreamImplSpi;
 import org.geotools.hdfs.HdfsImageInputStreamImpl;
+import org.geotools.hdfs.HdfsImageInputStreamImplSpi;
 import org.geotools.util.factory.Hints;
 
 /**

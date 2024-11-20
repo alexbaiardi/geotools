@@ -69,8 +69,8 @@ public class HdfsImageInputStreamImplSpi extends ImageInputStreamSpi {
         super.onRegistration(registry, category);
         Class<ImageInputStreamSpi> targetClass = ImageInputStreamSpi.class;
         for (Iterator<? extends ImageInputStreamSpi> i =
-             registry.getServiceProviders(targetClass, true);
-             i.hasNext(); ) {
+                        registry.getServiceProviders(targetClass, true);
+                i.hasNext(); ) {
             ImageInputStreamSpi other = i.next();
 
             if (this != other) registry.setOrdering(targetClass, this, other);
