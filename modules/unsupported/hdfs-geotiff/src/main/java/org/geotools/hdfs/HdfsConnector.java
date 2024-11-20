@@ -23,10 +23,10 @@ public class HdfsConnector {
 
     private final Configuration configuration = new Configuration();
 
-    public HdfsConnector(){
+    public HdfsConnector() {
         String hdfsConfigPath = System.getenv("HADOOP_CONF_DIR");
-        if (hdfsConfigPath == null){
-            hdfsConfigPath = "/opt/hadoop/etc/hadoop";
+        if (hdfsConfigPath == null) {
+            throw new IllegalStateException("Hadoop configuration path not set");
         }
         configuration.addResource(new Path(hdfsConfigPath + "/core-site.xml"));
         configuration.addResource(new Path(hdfsConfigPath + "/hdfs-site.xml"));
