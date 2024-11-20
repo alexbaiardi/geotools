@@ -29,8 +29,7 @@ public class HdfsImageInputStreamImpl extends ImageInputStreamImpl {
 
     private final String fileName;
     private final String url;
-    private long length;
-    private InputStream inputStream;
+    private final InputStream inputStream;
 
     public HdfsImageInputStreamImpl(URL input) throws IOException {
         this(input.toString());
@@ -42,8 +41,6 @@ public class HdfsImageInputStreamImpl extends ImageInputStreamImpl {
         HdfsConnector hdfsConnector = new HdfsConnector();
         Path filePath = new Path(input);
         FileSystem fileSystem = filePath.getFileSystem(hdfsConnector.getHdfsConfiguration());
-        FileStatus fileStatus = fileSystem.getFileStatus(filePath);
-        this.length = fileStatus.getLen();
         this.fileName = filePath.getName();
         this.inputStream = fileSystem.open(filePath);
     }

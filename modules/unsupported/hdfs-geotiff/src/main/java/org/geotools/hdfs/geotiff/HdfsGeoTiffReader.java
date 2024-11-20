@@ -47,7 +47,7 @@ public class HdfsGeoTiffReader extends GeoTiffReader {
         if (input instanceof HdfsImageInputStreamImpl) {
             String fileName = ((HdfsImageInputStreamImpl) input).getFileName();
             final int dotIndex = fileName.lastIndexOf('.');
-            if (dotIndex != -1 && dotIndex != fileName.length()) {
+            if (dotIndex != -1) {
                 this.coverageName = fileName.substring(0, dotIndex);
             }
         }

@@ -37,8 +37,6 @@ import org.geotools.util.factory.Hints;
  */
 public class HdfsGeoTiffFormat extends GeoTiffFormat {
 
-    private Properties prop;
-
     private static final Logger LOGGER = Logger.getLogger(HdfsGeoTiffFormat.class.getName());
 
     public HdfsGeoTiffFormat() {
@@ -56,22 +54,18 @@ public class HdfsGeoTiffFormat extends GeoTiffFormat {
                 new ParameterGroup(
                         new DefaultParameterDescriptorGroup(
                                 mInfo,
-                                new GeneralParameterDescriptor[] {
-                                    READ_GRIDGEOMETRY2D,
-                                    INPUT_TRANSPARENT_COLOR,
-                                    SUGGESTED_TILE_SIZE
-                                }));
+                                READ_GRIDGEOMETRY2D,
+                                INPUT_TRANSPARENT_COLOR,
+                                SUGGESTED_TILE_SIZE));
 
         // writing parameters
         writeParameters =
                 new ParameterGroup(
                         new DefaultParameterDescriptorGroup(
                                 mInfo,
-                                new GeneralParameterDescriptor[] {
-                                    RETAIN_AXES_ORDER,
-                                    AbstractGridFormat.GEOTOOLS_WRITE_PARAMS,
-                                    AbstractGridFormat.PROGRESS_LISTENER
-                                }));
+                                RETAIN_AXES_ORDER,
+                                AbstractGridFormat.GEOTOOLS_WRITE_PARAMS,
+                                AbstractGridFormat.PROGRESS_LISTENER));
     }
 
     @Override

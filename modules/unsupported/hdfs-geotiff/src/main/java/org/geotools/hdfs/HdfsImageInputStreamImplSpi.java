@@ -29,7 +29,7 @@ import javax.imageio.stream.ImageInputStream;
 
 /**
  * Implementation of an {@link ImageInputStreamSpi} for instantiating an {@link ImageInputStream}
- * capable of connecting to a {@link S3File}
+ * capable of connecting to HDFS file
  *
  * @see ImageInputStream
  * @see ImageInputStreamSpi
