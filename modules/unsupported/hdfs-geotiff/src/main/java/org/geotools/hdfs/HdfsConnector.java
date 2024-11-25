@@ -30,6 +30,9 @@ public class HdfsConnector {
         }
         configuration.addResource(new Path(hdfsConfigPath + "/core-site.xml"));
         configuration.addResource(new Path(hdfsConfigPath + "/hdfs-site.xml"));
+        configuration.set(
+                "fs.hdfs.impl", org.apache.hadoop.hdfs.DistributedFileSystem.class.getName());
+        configuration.set("fs.file.impl", org.apache.hadoop.fs.LocalFileSystem.class.getName());
     }
 
     public Configuration getHdfsConfiguration() {
