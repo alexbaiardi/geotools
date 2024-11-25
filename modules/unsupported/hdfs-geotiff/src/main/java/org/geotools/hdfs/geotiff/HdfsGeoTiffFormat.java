@@ -16,7 +16,7 @@
  */
 package org.geotools.hdfs.geotiff;
 
-1import java.io.*;
+import java.io.*;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.logging.Level;
